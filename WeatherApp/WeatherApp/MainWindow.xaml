@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="WeatherApp" Height="350" Width="525">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
