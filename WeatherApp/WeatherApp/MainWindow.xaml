@@ -16,26 +16,42 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
+
         <Label x:Name="LabelCountries"
                Margin="5"
                Grid.Column="0"
                Grid.Row="0"
+               Grid.ColumnSpan="1"
+               Grid.RowSpan="1"
                Content="Countries"
                FontSize="18"/>
         <ComboBox x:Name="CBCountries"
                   Margin="5"
                   Grid.Column="1"
-                  Grid.Row="0"/>
+                  Grid.Row="0"
+                  Grid.ColumnSpan="1"
+                  Grid.RowSpan="1"/>
 
         <Label x:Name="LabelCities"
                Margin="5"
                Grid.Column="0"
                Grid.Row="1"
+               Grid.ColumnSpan="1"
+               Grid.RowSpan="1"
                Content="Cities"
                FontSize="18"/>
         <ComboBox x:Name="CBCities"
                   Margin="5"
                   Grid.Column="1"
-                  Grid.Row="1"/>
+                  Grid.Row="1"
+                  Grid.ColumnSpan="1"
+                  Grid.RowSpan="1"/>
+
+        <RichTextBox x:Name="RTBWeatherDetails"
+                     Margin="5"
+                     Grid.Column="0"
+                     Grid.Row="2"
+                     Grid.ColumnSpan="2"
+                     Grid.RowSpan="1"/>
     </Grid>
 </Window>
