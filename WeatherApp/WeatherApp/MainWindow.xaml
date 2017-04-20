@@ -30,7 +30,8 @@
                   Grid.Column="1"
                   Grid.Row="0"
                   Grid.ColumnSpan="1"
-                  Grid.RowSpan="1"/>
+                  Grid.RowSpan="1"
+                  SelectionChanged="CBCountries_SelectionChanged"/>
 
         <Label x:Name="LabelCities"
                Margin="5"
@@ -45,7 +46,8 @@
                   Grid.Column="1"
                   Grid.Row="1"
                   Grid.ColumnSpan="1"
-                  Grid.RowSpan="1"/>
+                  Grid.RowSpan="1"
+                  SelectionChanged="CBCities_SelectionChanged"/>
 
         <RichTextBox x:Name="RTBWeatherDetails"
                      Margin="5"
