@@ -8,7 +8,7 @@
         Title="WeatherApp" Height="350" Width="525">
     <Grid Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
@@ -17,43 +17,48 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="LabelCountries"
+        <Label x:Name="LabelCity"
                Margin="5"
                Grid.Column="0"
                Grid.Row="0"
                Grid.ColumnSpan="1"
                Grid.RowSpan="1"
-               Content="Countries"
+               Content="City"
                FontSize="18"/>
-        <ComboBox x:Name="CBCountries"
-                  Margin="5"
-                  Grid.Column="1"
-                  Grid.Row="0"
-                  Grid.ColumnSpan="1"
-                  Grid.RowSpan="1"
-                  SelectionChanged="CBCountries_SelectionChanged"/>
+        <TextBox x:Name="TextBoxCity"
+                 Margin="5"
+                 Grid.Column="1"
+                 Grid.Row="0"
+                 Grid.ColumnSpan="1"
+                 Grid.RowSpan="1"
+                 Text=""
+                 FontSize="18"/>
 
-        <Label x:Name="LabelCities"
-               Margin="5"
-               Grid.Column="0"
-               Grid.Row="1"
-               Grid.ColumnSpan="1"
-               Grid.RowSpan="1"
-               Content="Cities"
-               FontSize="18"/>
-        <ComboBox x:Name="CBCities"
-                  Margin="5"
-                  Grid.Column="1"
-                  Grid.Row="1"
-                  Grid.ColumnSpan="1"
-                  Grid.RowSpan="1"
-                  SelectionChanged="CBCities_SelectionChanged"/>
+        <Button x:Name="ButtonSomethingElse"
+                Margin="5"
+                Grid.Column="0"
+                Grid.Row="1"
+                Grid.ColumnSpan="1"
+                Grid.RowSpan="1"
+                Content="Get Something Else"
+                FontSize="18"
+                Click="btnConditions_Click"/>
+        <Button x:Name="ButtonGetWeather"
+                Margin="5"
+                Grid.Column="1"
+                Grid.Row="1"
+                Grid.ColumnSpan="1"
+                Grid.RowSpan="1"
+                Content="Get Weather"
+                FontSize="18"
+                Click="ButtonGetWeather_Click"/>
 
         <RichTextBox x:Name="RTBWeatherDetails"
                      Margin="5"
                      Grid.Column="0"
                      Grid.Row="2"
                      Grid.ColumnSpan="2"
-                     Grid.RowSpan="1"/>
+                     Grid.RowSpan="1"
+                     FontSize="18"/>
     </Grid>
 </Window>

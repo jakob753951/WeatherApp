@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 using System.Xml.Serialization;
 using WeatherApp.ServiceReference;
 
@@ -24,44 +26,85 @@ namespace WeatherApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        internal Cities.NewDataSet cn;
+        private const string API_KEY = "a380e0de53c4d1f1666fc347af9c8dd9";
+        private const string CurrentUrl = "http://api.openweathermap.org/data/2.5/weather?q=@LOC@&mode=xml&units=imperial&APPID=" + API_KEY;
+        private const string ForecastUrl = "http://api.openweathermap.org/data/2.5/forecast?q=@LOC@&mode=xml&units=imperial&APPID=" + API_KEY;
         public MainWindow()
         {
             InitializeComponent();
+        }
 
-            BasicHttpBinding binding = new BasicHttpBinding();
-            binding.MaxReceivedMessageSize = 20000000;
-
-            EndpointAddress address = new EndpointAddress("http://www.webservicex.com/globalweather.asmx?WSDL");
-
-            GlobalWeatherSoapClient gwsc = new ServiceReference.GlobalWeatherSoapClient(binding, address);
-
-            string cities = gwsc.GetCitiesByCountry("");
-
-            XmlSerializer result = new XmlSerializer(typeof(Cities.NewDataSet));
-            cn = (Cities.NewDataSet)result.Deserialize(new StringReader(cities));
-
-            var Countries = cn.Table.Select(m => m.Country).Distinct();
-            foreach(string Country in Countries.ToArray())
+        // Get current conditions.
+        private void btnConditions_Click(object sender, EventArgs e)
+        {
+            // Compose the query URL.
+            string url = CurrentUrl.Replace("@LOC@", TextBoxCity.Text);
+            try
             {
-                CBCountries.Items.Add(Country);
+                ClearRichTextBox(RTBWeatherDetails);
+                InsertIntoRichTextBox(RTBWeatherDetails, GetFormattedXml(url));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
             }
         }
 
-        private void CBCountries_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        // Get a forecast.
+        private void ButtonGetWeather_Click(object sender, RoutedEventArgs e)
         {
-            var rr = cn.Table.Where(m => m.Country == CBCountries.Text).Select(c => c.City);
-
-            CBCities.Items.Clear();
-            foreach (var item in rr.ToArray())
+            // Compose the query URL.
+            string url = ForecastUrl.Replace("@LOC@", TextBoxCity.Text);
+            try
             {
-                CBCities.Items.Add(item);
+                ClearRichTextBox(RTBWeatherDetails);
+                InsertIntoRichTextBox(RTBWeatherDetails, GetFormattedXml(url));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
             }
         }
 
-        private void CBCities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        // Return the XML result of the URL.
+        private string GetFormattedXml(string url)
         {
+            // Create a web client.
+            using (WebClient client = new WebClient())
+            {
+                // Get the response string from the URL.
+                string xml = client.DownloadString(url);
 
+                // Load the response into an XML document.
+                XmlDocument xml_document = new XmlDocument();
+                xml_document.LoadXml(xml);
+
+                // Format the XML.
+                using (StringWriter string_writer = new StringWriter())
+                {
+                    XmlTextWriter xml_text_writer =
+                        new XmlTextWriter(string_writer);
+                    xml_text_writer.Formatting = Formatting.Indented;
+                    xml_document.WriteTo(xml_text_writer);
+
+                    // Return the result.
+                    return string_writer.ToString();
+                }
+            }
+        }
+
+
+
+        private void InsertIntoRichTextBox(RichTextBox rtb, string input)
+        {
+            Paragraph para = new Paragraph();
+            para.Margin = new Thickness(0);
+            para.Inlines.Add(input);
+            rtb.Document.Blocks.Add(para);
+        }
+        private void ClearRichTextBox(RichTextBox rtb)
+        {
+            rtb.Document.Blocks.Clear();
         }
     }
 }
