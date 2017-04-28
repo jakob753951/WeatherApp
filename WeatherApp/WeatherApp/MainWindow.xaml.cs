@@ -35,7 +35,7 @@ namespace WeatherApp
         }
 
         // Get current conditions.
-        private void btnConditions_Click(object sender, EventArgs e)
+        private void ButtonGetForecast_Click(object sender, EventArgs e)
         {
             // Compose the query URL.
             string url = CurrentUrl.Replace("@LOC@", TextBoxCity.Text);
@@ -69,6 +69,45 @@ namespace WeatherApp
         // Return the XML result of the URL.
         private string GetFormattedXml(string url)
         {
+            using (WebClient client = new WebClient())
+            {
+                XmlTextReader reader = new XmlTextReader(url);
+
+                string output = "";
+                while (reader.Read())
+                {
+                    for (int i = 0; i < reader.AttributeCount; i++)
+                    {
+                        output += $"{reader.Name}: {reader.GetAttribute(i)} {reader.Value} \n";
+                    }
+                }
+
+                /*
+                while (reader.Read())
+                {
+                    switch (reader.NodeType)
+                    {
+                        case XmlNodeType.Attribute:
+                            {
+                                output += reader.GetAttribute(0);
+                                break;
+                            }
+                        case XmlNodeType.Element:
+                            {
+                                output += reader.ToString();
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                    }
+                }
+                */
+                return output;
+            }
+
+            /*
             // Create a web client.
             using (WebClient client = new WebClient())
             {
@@ -82,8 +121,7 @@ namespace WeatherApp
                 // Format the XML.
                 using (StringWriter string_writer = new StringWriter())
                 {
-                    XmlTextWriter xml_text_writer =
-                        new XmlTextWriter(string_writer);
+                    XmlTextWriter xml_text_writer = new XmlTextWriter(string_writer);
                     xml_text_writer.Formatting = Formatting.Indented;
                     xml_document.WriteTo(xml_text_writer);
 
@@ -91,6 +129,7 @@ namespace WeatherApp
                     return string_writer.ToString();
                 }
             }
+            */
         }
 
 

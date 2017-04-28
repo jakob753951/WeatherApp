@@ -34,18 +34,18 @@
                  Text=""
                  FontSize="18"/>
 
-        <Button x:Name="ButtonSomethingElse"
+        <Button x:Name="ButtonGetForecast"
                 Margin="5"
-                Grid.Column="0"
+                Grid.Column="1"
                 Grid.Row="1"
                 Grid.ColumnSpan="1"
                 Grid.RowSpan="1"
-                Content="Get Something Else"
+                Content="Get Forecast"
                 FontSize="18"
-                Click="btnConditions_Click"/>
+                Click="ButtonGetForecast_Click"/>
         <Button x:Name="ButtonGetWeather"
                 Margin="5"
-                Grid.Column="1"
+                Grid.Column="0"
                 Grid.Row="1"
                 Grid.ColumnSpan="1"
                 Grid.RowSpan="1"
@@ -59,6 +59,7 @@
                      Grid.Row="2"
                      Grid.ColumnSpan="2"
                      Grid.RowSpan="1"
-                     FontSize="18"/>
+                     FontSize="18"
+                     ScrollViewer.VerticalScrollBarVisibility="Visible"/>
     </Grid>
 </Window>
