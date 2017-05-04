@@ -35,10 +35,10 @@ namespace WeatherApp
         }
 
         // Get current conditions.
-        private void ButtonGetForecast_Click(object sender, EventArgs e)
+        private void ButtonGetForecast_Click(object sender, RoutedEventArgs e)
         {
             // Compose the query URL.
-            string url = CurrentUrl.Replace("@LOC@", TextBoxCity.Text);
+            string url = ForecastUrl.Replace("@LOC@", TextBoxCity.Text);
             try
             {
                 ClearRichTextBox(RTBWeatherDetails);
@@ -54,7 +54,7 @@ namespace WeatherApp
         private void ButtonGetWeather_Click(object sender, RoutedEventArgs e)
         {
             // Compose the query URL.
-            string url = ForecastUrl.Replace("@LOC@", TextBoxCity.Text);
+            string url = CurrentUrl.Replace("@LOC@", TextBoxCity.Text);
             try
             {
                 ClearRichTextBox(RTBWeatherDetails);
@@ -69,32 +69,41 @@ namespace WeatherApp
         // Return the XML result of the URL.
         private string GetFormattedXml(string url)
         {
+
             using (WebClient client = new WebClient())
             {
                 XmlTextReader reader = new XmlTextReader(url);
-
                 string output = "";
-                while (reader.Read())
-                {
-                    for (int i = 0; i < reader.AttributeCount; i++)
-                    {
-                        output += $"{reader.Name}: {reader.GetAttribute(i)} {reader.Value} \n";
-                    }
-                }
 
-                /*
+
+                //string prevLocalName = "";
+                //while (reader.Read())
+                //{
+                //    for (int i = 0; i < reader.AttributeCount; i++)
+                //    {
+                //        output += $"{reader.LocalName}: {reader.GetAttribute(i)} {reader.Value}";
+                //        if(reader.LocalName != prevLocalName)
+                //        {
+                //            output += $"\n";
+                //        }
+                //        prevLocalName = reader.LocalName;
+                //    }
+                //}
+
+
+
                 while (reader.Read())
                 {
                     switch (reader.NodeType)
                     {
-                        case XmlNodeType.Attribute:
-                            {
-                                output += reader.GetAttribute(0);
-                                break;
-                            }
                         case XmlNodeType.Element:
                             {
-                                output += reader.ToString();
+                                output += $"{reader.Name}\n";
+                                while (reader.MoveToNextAttribute())
+                                {
+                                    output += $"{reader.Name} = {reader.Value}\n";
+                                }
+                                output += $"\n";
                                 break;
                             }
                         default:
@@ -103,33 +112,8 @@ namespace WeatherApp
                             }
                     }
                 }
-                */
                 return output;
             }
-
-            /*
-            // Create a web client.
-            using (WebClient client = new WebClient())
-            {
-                // Get the response string from the URL.
-                string xml = client.DownloadString(url);
-
-                // Load the response into an XML document.
-                XmlDocument xml_document = new XmlDocument();
-                xml_document.LoadXml(xml);
-
-                // Format the XML.
-                using (StringWriter string_writer = new StringWriter())
-                {
-                    XmlTextWriter xml_text_writer = new XmlTextWriter(string_writer);
-                    xml_text_writer.Formatting = Formatting.Indented;
-                    xml_document.WriteTo(xml_text_writer);
-
-                    // Return the result.
-                    return string_writer.ToString();
-                }
-            }
-            */
         }
 
 

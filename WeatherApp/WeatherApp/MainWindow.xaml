@@ -34,15 +34,6 @@
                  Text=""
                  FontSize="18"/>
 
-        <Button x:Name="ButtonGetForecast"
-                Margin="5"
-                Grid.Column="1"
-                Grid.Row="1"
-                Grid.ColumnSpan="1"
-                Grid.RowSpan="1"
-                Content="Get Forecast"
-                FontSize="18"
-                Click="ButtonGetForecast_Click"/>
         <Button x:Name="ButtonGetWeather"
                 Margin="5"
                 Grid.Column="0"
@@ -52,6 +43,15 @@
                 Content="Get Weather"
                 FontSize="18"
                 Click="ButtonGetWeather_Click"/>
+        <Button x:Name="ButtonGetForecast"
+                Margin="5"
+                Grid.Column="1"
+                Grid.Row="1"
+                Grid.ColumnSpan="1"
+                Grid.RowSpan="1"
+                Content="Get Forecast"
+                FontSize="18"
+                Click="ButtonGetForecast_Click"/>
 
         <RichTextBox x:Name="RTBWeatherDetails"
                      Margin="5"
